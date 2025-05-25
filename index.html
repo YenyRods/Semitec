@@ -2,814 +2,1009 @@
 <html lang="es">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Semillero de Investigación y Programación "Semitec"</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Semillero de Investigación y Programación "Semitec"</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-    :root {
-      --primary-color: #1e8449;
-      --secondary-color: #c0392b;
-      --accent-color: #2ecc71;
-      --dark-color: #1a5c32;
-      --light-color: #f8f9fa;
-    }
+        :root {
+            --primary-color: #1e8449;
+            --secondary-color: #c0392b;
+            --accent-color: #2ecc71;
+            --dark-color: #1a5c32;
+            --light-color: #f8f9fa;
+        }
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background-color: #f0f0f0;
-      overflow: hidden;
-    }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
 
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition: opacity 0.8s ease-in-out;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-    }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .slide.active {
-      opacity: 1;
-      z-index: 10;
-    }
+        .slide.active {
+            opacity: 1;
+            z-index: 10;
+        }
 
-    .slide-content {
-      flex: 1;
-      padding: 2rem;
-      overflow-y: auto;
-    }
+        .slide-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
 
-    .slide-header {
-      background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
-      color: white;
-      padding: 1.5rem;
-      border-bottom: 4px solid var(--secondary-color);
-    }
+        .slide-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 1.5rem;
+            border-bottom: 4px solid var(--secondary-color);
+        }
 
-    .slide-footer {
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 2px solid var(--primary-color);
-    }
+        .slide-footer {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid var(--primary-color);
+        }
 
-    .btn {
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-weight: 500;
-    }
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
 
-    .btn:hover {
-      background-color: var(--dark-color);
-      transform: translateY(-2px);
-    }
+        .btn:hover {
+            background-color: var(--dark-color);
+            transform: translateY(-2px);
+        }
 
-    .btn:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
 
-    .card {
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      border-left: 4px solid var(--primary-color);
-    }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+        }
 
-    .card-title {
-      color: var(--primary-color);
-      border-bottom: 2px solid var(--secondary-color);
-      padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
-    }
+        .card-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
 
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-  </style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
-  <div class="container mx-auto h-screen flex flex-col">
+    <div class="container mx-auto h-screen flex flex-col">
 
-    <!-- Slide 1: Portada -->
-    <div class="slide active" id="slide1">
-      <div class="slide-header">
-        <h1 class="text-3xl font-bold text-center">PROYECTO SEMILLERO DE INVESTIGACIÓN Y PROGRAMACIÓN</h1>
-      </div>
-      <div class="slide-content flex items-center justify-center">
-        <div class="text-center">
-          <img alt="Logo Semitec" class="mx-auto w-64 mb-8" src="Logo semitec.png" />
-          <h2 class="text-4xl font-bold mb-4 text-gray-800">Semillero de Investigación y Programación</h2>
-          <h3 class="text-5xl font-bold mb-8 text-green-700">"SEMITEC"</h3>
+        <!-- Slide 1: Portada -->
+        <div class="slide active" id="slide1">
+            <div class="slide-header">
+                <h1 class="text-3xl font-bold text-center">MEDIA TECNICA EN PROGRAMACION DE SOFTWARE</h1>
+                <h1 class="text-3xl font-bold text-center">IE SAN JOSÉ</h1>
+            </div>
+            <div class="slide-content flex items-center justify-center">
+                <div class="text-center">
+                    <img alt="Logo Semitec" class="mx-auto w-64 mb-8" src="Logo semitec.png" />
+                    <h2 class="text-4xl font-bold mb-4 text-gray-800">Semillero de Investigación y Programación</h2>
+                    <h3 class="text-5xl font-bold mb-8 text-green-700">"SEMITEC"</h3>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="text-sm">1/10</span>
+                <div>
+                    <button class="btn" disabled>Anterior</button>
+                    <button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="slide-footer">
-        <span class="text-sm">1/10</span>
-        <div>
-          <button class="btn" disabled>Anterior</button>
-          <button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
+
+        <!-- Slide 2: Justificación -->
+        <div class="slide" id="slide2">
+            <div class="slide-header">
+                <h1 class="text-2xl font-bold">Justificación</h1>
+            </div>
+            <div class="slide-content">
+                <div class="card">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-green-600 text-white p-3 rounded-full mr-4">
+                            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-semibold text-green-700">¿Por qué un semillero de investigación y
+                            programación?</h2>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-red-500">
+                        <p class="text-lg mb-4">En un mundo cada vez más digitalizado, la programación y la
+                            investigación tecnológica son herramientas fundamentales para el desarrollo académico y
+                            profesional.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                                <div class="flex items-center mb-2">
+                                    <svg class="h-6 w-6 text-green-600 mr-2" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <h3 class="font-semibold">Fomento de habilidades</h3>
+                                </div>
+                                <p>Pensamiento lógico, análisis crítico y resolución de problemas a través del estudio
+                                    de la programación y la investigación aplicada.</p>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+                                <div class="flex items-center mb-2">
+                                    <svg class="h-6 w-6 text-red-600 mr-2" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <h3 class="font-semibold">Fortalecimiento de competencias</h3>
+                                </div>
+                                <p>Permitirá a los estudiantes fortalecer sus competencias en el diseño y desarrollo de
+                                    software.</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                                <div class="flex items-center mb-2">
+                                    <svg class="h-6 w-6 text-green-600 mr-2" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round"
+                                            stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <h3 class="font-semibold">Incentivo a la innovación</h3>
+                                </div>
+                                <p>Fomento de la creatividad y la búsqueda de soluciones innovadoras a problemas reales.
+                                </p>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+                                <div class="flex items-center mb-2">
+                                    <svg class="h-6 w-6 text-red-600 mr-2" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <h3 class="font-semibold">Trabajo colaborativo</h3>
+                                </div>
+                                <p>Desarrollo de habilidades para el trabajo en equipo y la colaboración efectiva.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="text-sm">2/10</span>
+                <div>
+                    <button class="btn" onclick="prevSlide()">Anterior</button>
+                    <button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
+                </div>
+            </div>
         </div>
-      </div>
+        <!-- Slide 3: Objetivos -->
+        <div class="slide" id="slide3">
+            <div class="slide-header">
+                <h1 class="text-2xl font-bold">Objetivos</h1>
+            </div>
+            <div class="slide-content">
+                <div class="card mb-6">
+                    <h2 class="card-title text-xl font-bold">Objetivo General</h2>
+                    <div class="bg-green-100 p-4 rounded-lg border-l-4 border-green-600 flex items-center">
+                        <svg class="h-10 w-10 text-green-600 mr-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"></path>
+                        </svg>
+                        <p class="text-lg">Fomentar el desarrollo de habilidades en programación y pensamiento
+                            computacional a través de la investigación aplicada y el trabajo en equipo.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2 class="card-title text-xl font-bold">Objetivos Específicos</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow border-l-4 border-red-500">
+                            <div class="flex items-center">
+                                <div
+                                    class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    1</div>
+                                <p>Brindar herramientas teóricas y prácticas en el desarrollo de software.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
+                            <div class="flex items-center">
+                                <div
+                                    class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    2</div>
+                                <p>Incentivar la investigación en el área de programación y nuevas tecnologías.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow border-l-4 border-red-500">
+                            <div class="flex items-center">
+                                <div
+                                    class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    3</div>
+                                <p>Aplicar metodologías ágiles en la gestión de proyectos de software.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
+                            <div class="flex items-center">
+                                <div
+                                    class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    4</div>
+                                <p>Desarrollar proyectos innovadores que respondan a problemáticas reales.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow border-l-4 border-red-500 md:col-span-2">
+                            <div class="flex items-center">
+                                <div
+                                    class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                    5</div>
+                                <p>Participar en eventos y concursos de programación e innovación tecnológica.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="text-sm">3/10</span>
+                <div>
+                    <button class="btn" onclick="prevSlide()">Anterior</button>
+                    <button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 4: Población Objetivo y Metodología -->
+        <div class="slide" id="slide4">
+            <div class="slide-header">
+                <h1 class="text-2xl font-bold">Población Objetivo y Metodología</h1>
+            </div>
+            <div class="slide-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card">
+                        <h2 class="card-title text-xl font-bold">Población Objetivo</h2>
+                        <div class="bg-white p-5 rounded-lg shadow-md border-l-4 border-green-600">
+                            <div class="flex items-center mb-4">
+                                <svg class="h-10 w-10 text-green-600 mr-3" fill="none" stroke="currentColor"
+                                    viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                </svg>
+                                <h3 class="text-lg font-semibold">Estudiantes de grado 10 y 11</h3>
+                            </div>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <svg class="h-5 w-5 text-red-500 mr-2 mt-1" fill="currentColor" viewbox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path clip-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            fill-rule="evenodd"></path>
+                                    </svg>
+                                    <span>Con conocimientos básicos en programación</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="h-5 w-5 text-red-500 mr-2 mt-1" fill="currentColor" viewbox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path clip-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            fill-rule="evenodd"></path>
+                                    </svg>
+                                    <span>Interesados en fortalecer sus habilidades en desarrollo de software</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="h-5 w-5 text-red-500 mr-2 mt-1" fill="currentColor" viewbox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path clip-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            fill-rule="evenodd"></path>
+                                    </svg>
+                                    <span>Motivados por aprender metodologías de investigación</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2 class="card-title text-xl font-bold">Metodología</h2>
+                        <p class="mb-4">El semillero funcionará bajo una metodología activa y participativa, basada en:
+                        </p>
+                        <div class="space-y-3">
+                            <div class="bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
+                                <div class="flex items-center">
+                                    <svg class="h-6 w-6 text-green-600 mr-2" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <p><strong>Aprendizaje basado en proyectos:</strong> Soluciones a problemas reales
+                                        mediante la programación.</p>
+                                </div>
+                            </div>
+                            <div class="bg-red-50 p-3 rounded-lg border-l-4 border-red-500">
+                                <div class="flex items-center">
+                                    <svg class="h-6 w-6 text-red-600 mr-2" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round"
+                                            stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <p><strong>Investigación aplicada:</strong> Exploración de nuevas tecnologías y
+                                        metodologías.</p>
+                                </div>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
+                                <div class="flex items-center">
+                                    <svg class="h-6 w-6 text-green-600 mr-2" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <p><strong>Trabajo colaborativo:</strong> Trabajo en equipo y uso de herramientas
+                                        ágiles como SCRUM.</p>
+                                </div>
+                            </div>
+                            <div class="bg-red-50 p-3 rounded-lg border-l-4 border-red-500">
+                                <div class="flex items-center">
+                                    <svg class="h-6 w-6 text-red-600 mr-2" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <p><strong>Talleres y retos:</strong> Sesiones prácticas con ejercicios de
+                                        programación.</p>
+                                </div>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
+                                <div class="flex items-center">
+                                    <svg class="h-6 w-6 text-green-600 mr-2" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <p><strong>Participación en eventos:</strong> Hackatones, ferias tecnológicas y
+                                        competencias.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-6">
+                    <h2 class="card-title text-xl font-bold">Temáticas</h2>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="bg-green-100 p-4 rounded-lg flex-1 text-center border-2 border-green-600">
+                            <svg class="h-12 w-12 mx-auto text-green-600 mb-2" fill="none" stroke="currentColor"
+                                viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                            <h3 class="text-lg font-semibold">Ambientales en colaboracion con el proyecto PRAE de la
+                                institución</h3>
+                        </div>
+                        <div class="bg-red-100 p-4 rounded-lg flex-1 text-center border-2 border-red-600">
+                            <svg class="h-12 w-12 mx-auto text-red-600 mb-2" fill="none" stroke="currentColor"
+                                viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                            <h3 class="text-lg font-semibold">Soluciones a problemas sociales identificados en contexto
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="text-sm">4/10</span>
+                <div>
+                    <button class="btn" onclick="prevSlide()">Anterior</button>
+                    <button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 5: Recursos -->
+        <div class="slide" id="slide5">
+            <div class="slide-header">
+                <h1 class="text-2xl font-bold">Recursos</h1>
+            </div>
+            <div class="slide-content">
+                <div class="card">
+                    <h2 class="card-title text-xl font-bold mb-6">Recursos Necesarios</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-green-500">
+                            <div class="flex flex-col items-center">
+                                <svg class="h-16 w-16 text-green-600 mb-4" fill="none" stroke="currentColor"
+                                    viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                </svg>
+                                <h3 class="text-lg font-semibold text-center mb-2">Aulas de informática</h3>
+                                <p class="text-center text-gray-600">Con acceso a internet para prácticas y desarrollo.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-red-500">
+                            <div class="flex flex-col items-center">
+                                <svg class="h-16 w-16 text-red-600 mb-4" fill="none" stroke="currentColor"
+                                    viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="2"></path>
+                                </svg>
+                                <h3 class="text-lg font-semibold text-center mb-2">Software de desarrollo</h3>
+                                <p class="text-center text-gray-600">Java, IDEs, plataformas en línea.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-green-500">
+                            <div class="flex flex-col items-center">
+                                <svg class="h-16 w-16 text-green-600 mb-4" fill="none" stroke="currentColor"
+                                    viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                </svg>
+                                <h3 class="text-lg font-semibold text-center mb-2">Bibliografía y material</h3>
+                                <p class="text-center text-gray-600">Material de apoyo para el aprendizaje.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-red-500">
+                            <div class="flex flex-col items-center">
+                                <svg class="h-16 w-16 text-red-600 mb-4" fill="none" stroke="currentColor"
+                                    viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                </svg>
+                                <h3 class="text-lg font-semibold text-center mb-2">Espacios de trabajo</h3>
+                                <p class="text-center text-gray-600">Espacios colaborativos para el desarrollo de
+                                    proyectos.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white p-4 rounded-lg shadow-md border-t-4 border-green-500 md:col-span-3 lg:col-span-1">
+                            <div class="flex flex-col items-center">
+                                <svg class="h-16 w-16 text-green-600 mb-4" fill="none" stroke="currentColor"
+                                    viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                </svg>
+                                <h3 class="text-lg font-semibold text-center mb-2">Asesoría de expertos</h3>
+                                <p class="text-center text-gray-600">Expertos en programación y desarrollo de software.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="text-sm">5/10</span>
+                <div>
+                    <button class="btn" onclick="prevSlide()">Anterior</button>
+                    <button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 6: Evaluación y Seguimiento / Impacto Esperado -->
+        <div class="slide" id="slide6">
+            <div class="slide-header">
+                <h1 class="text-2xl font-bold">Evaluación y Seguimiento / Impacto Esperado</h1>
+            </div>
+            <div class="slide-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card">
+                        <h2 class="card-title text-xl font-bold">Evaluación y Seguimiento</h2>
+                        <p class="mb-4">El avance del semillero será evaluado mediante:</p>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        1</div>
+                                    <p>Revisión de proyectos desarrollados por los estudiantes.</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-red-500">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        2</div>
+                                    <p>Presentaciones periódicas de avances.</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        3</div>
+                                    <p>Participación en eventos y concursos.</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-red-500">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        4</div>
+                                    <p>Encuestas de retroalimentación a los participantes.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2 class="card-title text-xl font-bold">Impacto Esperado</h2>
+                        <div class="space-y-4 mt-4">
+                            <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                                <div class="flex items-start">
+                                    <svg class="h-6 w-6 text-green-600 mr-2 mt-1" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <div>
+                                        <h3 class="font-semibold">Fortalecimiento de habilidades</h3>
+                                        <p class="text-sm text-gray-600">Desarrollo de habilidades técnicas y analíticas
+                                            de los estudiantes.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+                                <div class="flex items-start">
+                                    <svg class="h-6 w-6 text-red-600 mr-2 mt-1" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round"
+                                            stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <div>
+                                        <h3 class="font-semibold">Desarrollo de proyectos innovadores</h3>
+                                        <p class="text-sm text-gray-600">Creación de proyectos con impacto social y
+                                            tecnológico.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                                <div class="flex items-start">
+                                    <svg class="h-6 w-6 text-green-600 mr-2 mt-1" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <div>
+                                        <h3 class="font-semibold">Mayor participación</h3>
+                                        <p class="text-sm text-gray-600">Incremento en la participación en eventos de
+                                            programación e innovación.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+                                <div class="flex items-start">
+                                    <svg class="h-6 w-6 text-red-600 mr-2 mt-1" fill="none" stroke="currentColor"
+                                        viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                    <div>
+                                        <h3 class="font-semibold">Formación integral</h3>
+                                        <p class="text-sm text-gray-600">Estudiantes con competencias sólidas en
+                                            desarrollo de software y metodologías de investigación.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-6">
+                    <h2 class="card-title text-xl font-bold">Duración</h2>
+                    <div class="bg-white p-5 rounded-lg shadow-md border-l-4 border-green-600 flex items-center">
+                        <svg class="h-12 w-12 text-green-600 mr-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                        </svg>
+                        <p class="text-lg">El semillero se desarrollará a lo largo del año académico con sesiones
+                            semanales.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="text-sm">6/10</span>
+                <div>
+                    <button class="btn" onclick="prevSlide()">Anterior</button>
+                    <button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 7: Horarios y Estudiantes -->
+        <div class="slide" id="slide7">
+            <div class="slide-header">
+                <h1 class="text-2xl font-bold">Horarios y Estudiantes</h1>
+            </div>
+            <div class="slide-content">
+                <div class="card mb-6">
+                    <h2 class="card-title text-xl font-bold">Horario de Sesiones</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-lg shadow-md border-l-4 border-green-600 flex items-center">
+                            <svg class="h-10 w-10 text-green-600 mr-4" fill="none" stroke="currentColor"
+                                viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold">Día y Hora:</h3>
+                                <p class="text-lg">Lunes de 4:30 a 5:30</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg shadow-md border-l-4 border-red-600 flex items-center">
+                            <svg class="h-10 w-10 text-red-600 mr-4" fill="none" stroke="currentColor"
+                                viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold">Lugar:</h3>
+                                <p class="text-lg">Sala de media técnica</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card">
+                        <h2 class="card-title text-xl font-bold">Estudiantes de Décimo</h2>
+                        <div class="student-list">
+                            <div class="student-card">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Juan Felipe González Otálvaro</p>
+                                </div>
+                            </div>
+                            <div class="student-card">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Alejandro Vargas Ramírez</p>
+                                </div>
+                            </div>
+                            <div class="student-card">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Santiago Echeverri Vanegas</p>
+                                </div>
+                            </div>
+                            <div class="student-card">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Melany David Salgado</p>
+                                </div>
+                            </div>
+                            <div class="student-card">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Ronallys Vargas Angarita</p>
+                                </div>
+                            </div>
+                            <div class="student-card">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Yanienderlin González Arroyo</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2 class="card-title text-xl font-bold">Estudiantes de Once</h2>
+                        <div class="student-list">
+                            <div class="student-card">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Samuel Santiago García</p>
+                                </div>
+                            </div>
+                            <div class="student-card">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Yeiner Julián Jiménez</p>
+                                </div>
+                            </div>
+                            <div class="student-card">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Andrés Felipe Sepúlveda</p>
+                                </div>
+                            </div>
+                            <div class="student-card">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Jhon Mauricio Orrego</p>
+                                </div>
+                            </div>
+                            <div class="student-card">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Jhonathan Oscar</p>
+                                </div>
+                            </div>
+                            <div class="student-card">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <p>Juan Diego Vallejo</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="text-sm">7/10</span>
+                <div>
+                    <button class="btn" onclick="prevSlide()">Anterior</button>
+                    <button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Slide 8: Proyectos Actuales -->
+        <div class="slide" id="slide8">
+            <div class="slide-header">
+                <h1 class="text-2xl font-bold">Proyectos Actuales</h1>
+            </div>
+            <div class="slide-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card">
+                        <h2 class="text-xl font-semibold text-green-700 mb-2">App Huella de Carbono</h2>
+                        <p>Aplicación web para calcular y concienciar sobre el impacto ambiental individual mediante el
+                            cálculo de la huella de carbono.</p>
+                    </div>
+                    <div class="card">
+                        <h2 class="text-xl font-semibold text-green-700 mb-2">App Consumo de Agua</h2>
+                        <p>Herramienta para registrar y analizar el consumo de agua con el fin de promover hábitos
+                            sostenibles en el hogar o institución.</p>
+                    </div>
+                    <div class="card">
+                        <h2 class="text-xl font-semibold text-green-700 mb-2">App Registro Abejas y Flores de Oriente
+                        </h2>
+                        <p>Aplicación colaborativa para registrar especies de abejas y flores en la región, fomentando
+                            la protección de la biodiversidad local.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="text-sm">8/10</span>
+                <div>
+                    <button class="btn" onclick="prevSlide()">Anterior</button>
+                    <button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Conocimientos -->
+        <div class="slide" id="slide9">
+            <div class="slide-header">
+                <h1 class="text-2xl font-bold">Reconocimientos</h1>
+            </div>
+            <div class="slide-content">
+                <div class="card">
+                    <h2 class="text-xl font-semibold text-green-700 mb-4">Recnocimientos recibidos</h2>
+                    <p class="mb-4">En esta sección se presentarán los principales reconcmientos que hemos recibidos
+                        hasta ahora.</p>
+                    <p class="mb-4">Aqui van fotos de talleres, pantallazos de proyectos, líneas de código,
+                        diagramas u otras evidencias.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                        <div
+                            class="bg-gray-200 h-48 flex items-center justify-center text-gray-600 font-semibold rounded-lg">
+                            Foto 1</div>
+                        <div
+                            class="bg-gray-200 h-48 flex items-center justify-center text-gray-600 font-semibold rounded-lg">
+                            Foto 2</div>
+                        <div
+                            class="bg-gray-200 h-48 flex items-center justify-center text-gray-600 font-semibold rounded-lg">
+                            Foto 3</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="text-sm">9/10</span>
+                <div>
+                    <button class="btn" onclick="prevSlide()">Anterior</button>
+                    <button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Final -->
+        <div class="slide" id="slide10">
+            <div class="slide-header">
+                <h1 class="text-2xl font-bold">Nuestra institución y nuestro proyecto PRAE</h1>
+            </div>
+            <div class="slide-content flex items-center justify-center">
+                <div class="max-w-5xl text-center">
+                    <p class="text-lg mb-4" style="text-align: justify;">
+                        El semillero "Semitec" representa una oportunidad única para que los estudiantes de la IE San
+                        José de Marinilla desarrollen habilidades fundamentales en programación e investigación,
+                        preparándolos para los desafíos del mundo digital actual.
+                    </p>
+                    <p class="text-lg mb-4" style="text-align: justify;">
+                        A través de una metodología activa y participativa, los estudiantes no solo adquirirán
+                        conocimientos técnicos, sino que también desarrollarán competencias en trabajo colaborativo,
+                        resolución de problemas y pensamiento crítico.
+                    </p>
+                    <p class="text-lg font-semibold text-green-700">¡Juntos construimos el futuro tecnológico!</p>
+
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="text-sm">10/10</span>
+                <div>
+                    <button class="btn" onclick="prevSlide()">Anterior</button>
+                    <button class="btn ml-2" disabled>Siguiente</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-   <!-- Slide 2: Justificación -->
-<div class="slide" id="slide2">
-<div class="slide-header">
-<h1 class="text-2xl font-bold">Justificación</h1>
-</div>
-<div class="slide-content">
-<div class="card">
-<div class="flex items-center mb-6">
-<div class="bg-green-600 text-white p-3 rounded-full mr-4">
-<svg class="h-8 w-8" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<h2 class="text-2xl font-semibold text-green-700">¿Por qué un semillero de investigación y programación?</h2>
-</div>
-<div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-red-500">
-<p class="text-lg mb-4">En un mundo cada vez más digitalizado, la programación y la investigación tecnológica son herramientas fundamentales para el desarrollo académico y profesional.</p>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-<div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
-<div class="flex items-center mb-2">
-<svg class="h-6 w-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="font-semibold">Fomento de habilidades</h3>
-</div>
-<p>Pensamiento lógico, análisis crítico y resolución de problemas a través del estudio de la programación y la investigación aplicada.</p>
-</div>
-<div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
-<div class="flex items-center mb-2">
-<svg class="h-6 w-6 text-red-600 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="font-semibold">Fortalecimiento de competencias</h3>
-</div>
-<p>Permitirá a los estudiantes fortalecer sus competencias en el diseño y desarrollo de software.</p>
-</div>
-<div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
-<div class="flex items-center mb-2">
-<svg class="h-6 w-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="font-semibold">Incentivo a la innovación</h3>
-</div>
-<p>Fomento de la creatividad y la búsqueda de soluciones innovadoras a problemas reales.</p>
-</div>
-<div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
-<div class="flex items-center mb-2">
-<svg class="h-6 w-6 text-red-600 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="font-semibold">Trabajo colaborativo</h3>
-</div>
-<p>Desarrollo de habilidades para el trabajo en equipo y la colaboración efectiva.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="slide-footer">
-<span class="text-sm">2/8</span>
-<div>
-<button class="btn" onclick="prevSlide()">Anterior</button>
-<button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
-</div>
-</div>
-</div>
-<!-- Slide 3: Objetivos -->
-<div class="slide" id="slide3">
-<div class="slide-header">
-<h1 class="text-2xl font-bold">Objetivos</h1>
-</div>
-<div class="slide-content">
-<div class="card mb-6">
-<h2 class="card-title text-xl font-bold">Objetivo General</h2>
-<div class="bg-green-100 p-4 rounded-lg border-l-4 border-green-600 flex items-center">
-<svg class="h-10 w-10 text-green-600 mr-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<p class="text-lg">Fomentar el desarrollo de habilidades en programación y pensamiento computacional a través de la investigación aplicada y el trabajo en equipo.</p>
-</div>
-</div>
-<div class="card">
-<h2 class="card-title text-xl font-bold">Objetivos Específicos</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div class="bg-white p-4 rounded-lg shadow border-l-4 border-red-500">
-<div class="flex items-center">
-<div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">1</div>
-<p>Brindar herramientas teóricas y prácticas en el desarrollo de software.</p>
-</div>
-</div>
-<div class="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
-<div class="flex items-center">
-<div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">2</div>
-<p>Incentivar la investigación en el área de programación y nuevas tecnologías.</p>
-</div>
-</div>
-<div class="bg-white p-4 rounded-lg shadow border-l-4 border-red-500">
-<div class="flex items-center">
-<div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">3</div>
-<p>Aplicar metodologías ágiles en la gestión de proyectos de software.</p>
-</div>
-</div>
-<div class="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
-<div class="flex items-center">
-<div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">4</div>
-<p>Desarrollar proyectos innovadores que respondan a problemáticas reales.</p>
-</div>
-</div>
-<div class="bg-white p-4 rounded-lg shadow border-l-4 border-red-500 md:col-span-2">
-<div class="flex items-center">
-<div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">5</div>
-<p>Participar en eventos y concursos de programación e innovación tecnológica.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="slide-footer">
-<span class="text-sm">3/8</span>
-<div>
-<button class="btn" onclick="prevSlide()">Anterior</button>
-<button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
-</div>
-</div>
-</div>
-<!-- Slide 4: Población Objetivo y Metodología -->
-<div class="slide" id="slide4">
-<div class="slide-header">
-<h1 class="text-2xl font-bold">Población Objetivo y Metodología</h1>
-</div>
-<div class="slide-content">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<div class="card">
-<h2 class="card-title text-xl font-bold">Población Objetivo</h2>
-<div class="bg-white p-5 rounded-lg shadow-md border-l-4 border-green-600">
-<div class="flex items-center mb-4">
-<svg class="h-10 w-10 text-green-600 mr-3" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="text-lg font-semibold">Estudiantes de grado 10 y 11</h3>
-</div>
-<ul class="space-y-2">
-<li class="flex items-start">
-<svg class="h-5 w-5 text-red-500 mr-2 mt-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path>
-</svg>
-<span>Con conocimientos básicos en programación</span>
-</li>
-<li class="flex items-start">
-<svg class="h-5 w-5 text-red-500 mr-2 mt-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path>
-</svg>
-<span>Interesados en fortalecer sus habilidades en desarrollo de software</span>
-</li>
-<li class="flex items-start">
-<svg class="h-5 w-5 text-red-500 mr-2 mt-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path>
-</svg>
-<span>Motivados por aprender metodologías de investigación</span>
-</li>
-</ul>
-</div>
-</div>
-<div class="card">
-<h2 class="card-title text-xl font-bold">Metodología</h2>
-<p class="mb-4">El semillero funcionará bajo una metodología activa y participativa, basada en:</p>
-<div class="space-y-3">
-<div class="bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
-<div class="flex items-center">
-<svg class="h-6 w-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<p><strong>Aprendizaje basado en proyectos:</strong> Soluciones a problemas reales mediante la programación.</p>
-</div>
-</div>
-<div class="bg-red-50 p-3 rounded-lg border-l-4 border-red-500">
-<div class="flex items-center">
-<svg class="h-6 w-6 text-red-600 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<p><strong>Investigación aplicada:</strong> Exploración de nuevas tecnologías y metodologías.</p>
-</div>
-</div>
-<div class="bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
-<div class="flex items-center">
-<svg class="h-6 w-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<p><strong>Trabajo colaborativo:</strong> Trabajo en equipo y uso de herramientas ágiles como SCRUM.</p>
-</div>
-</div>
-<div class="bg-red-50 p-3 rounded-lg border-l-4 border-red-500">
-<div class="flex items-center">
-<svg class="h-6 w-6 text-red-600 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<p><strong>Talleres y retos:</strong> Sesiones prácticas con ejercicios de programación.</p>
-</div>
-</div>
-<div class="bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
-<div class="flex items-center">
-<svg class="h-6 w-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<p><strong>Participación en eventos:</strong> Hackatones, ferias tecnológicas y competencias.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="card mt-6">
-<h2 class="card-title text-xl font-bold">Temáticas</h2>
-<div class="flex flex-wrap gap-4">
-<div class="bg-green-100 p-4 rounded-lg flex-1 text-center border-2 border-green-600">
-<svg class="h-12 w-12 mx-auto text-green-600 mb-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="text-lg font-semibold">Ambientales</h3>
-</div>
-<div class="bg-red-100 p-4 rounded-lg flex-1 text-center border-2 border-red-600">
-<svg class="h-12 w-12 mx-auto text-red-600 mb-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="text-lg font-semibold">Problemas Sociales</h3>
-</div>
-</div>
-</div>
-</div>
-<div class="slide-footer">
-<span class="text-sm">4/8</span>
-<div>
-<button class="btn" onclick="prevSlide()">Anterior</button>
-<button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
-</div>
-</div>
-</div>
-<!-- Slide 5: Recursos -->
-<div class="slide" id="slide5">
-<div class="slide-header">
-<h1 class="text-2xl font-bold">Recursos</h1>
-</div>
-<div class="slide-content">
-<div class="card">
-<h2 class="card-title text-xl font-bold mb-6">Recursos Necesarios</h2>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-<div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-green-500">
-<div class="flex flex-col items-center">
-<svg class="h-16 w-16 text-green-600 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="text-lg font-semibold text-center mb-2">Aulas de informática</h3>
-<p class="text-center text-gray-600">Con acceso a internet para prácticas y desarrollo.</p>
-</div>
-</div>
-<div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-red-500">
-<div class="flex flex-col items-center">
-<svg class="h-16 w-16 text-red-600 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="text-lg font-semibold text-center mb-2">Software de desarrollo</h3>
-<p class="text-center text-gray-600">Java, IDEs, plataformas en línea.</p>
-</div>
-</div>
-<div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-green-500">
-<div class="flex flex-col items-center">
-<svg class="h-16 w-16 text-green-600 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="text-lg font-semibold text-center mb-2">Bibliografía y material</h3>
-<p class="text-center text-gray-600">Material de apoyo para el aprendizaje.</p>
-</div>
-</div>
-<div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-red-500">
-<div class="flex flex-col items-center">
-<svg class="h-16 w-16 text-red-600 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="text-lg font-semibold text-center mb-2">Espacios de trabajo</h3>
-<p class="text-center text-gray-600">Espacios colaborativos para el desarrollo de proyectos.</p>
-</div>
-</div>
-<div class="bg-white p-4 rounded-lg shadow-md border-t-4 border-green-500 md:col-span-3 lg:col-span-1">
-<div class="flex flex-col items-center">
-<svg class="h-16 w-16 text-green-600 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="text-lg font-semibold text-center mb-2">Asesoría de expertos</h3>
-<p class="text-center text-gray-600">Expertos en programación y desarrollo de software.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="slide-footer">
-<span class="text-sm">5/8</span>
-<div>
-<button class="btn" onclick="prevSlide()">Anterior</button>
-<button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
-</div>
-</div>
-</div>
-<!-- Slide 6: Evaluación y Seguimiento / Impacto Esperado -->
-<div class="slide" id="slide6">
-<div class="slide-header">
-<h1 class="text-2xl font-bold">Evaluación y Seguimiento / Impacto Esperado</h1>
-</div>
-<div class="slide-content">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<div class="card">
-<h2 class="card-title text-xl font-bold">Evaluación y Seguimiento</h2>
-<p class="mb-4">El avance del semillero será evaluado mediante:</p>
-<div class="space-y-4">
-<div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
-<div class="flex items-center">
-<div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">1</div>
-<p>Revisión de proyectos desarrollados por los estudiantes.</p>
-</div>
-</div>
-<div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-red-500">
-<div class="flex items-center">
-<div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">2</div>
-<p>Presentaciones periódicas de avances.</p>
-</div>
-</div>
-<div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
-<div class="flex items-center">
-<div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">3</div>
-<p>Participación en eventos y concursos.</p>
-</div>
-</div>
-<div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-red-500">
-<div class="flex items-center">
-<div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">4</div>
-<p>Encuestas de retroalimentación a los participantes.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="card">
-<h2 class="card-title text-xl font-bold">Impacto Esperado</h2>
-<div class="space-y-4 mt-4">
-<div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
-<div class="flex items-start">
-<svg class="h-6 w-6 text-green-600 mr-2 mt-1" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<div>
-<h3 class="font-semibold">Fortalecimiento de habilidades</h3>
-<p class="text-sm text-gray-600">Desarrollo de habilidades técnicas y analíticas de los estudiantes.</p>
-</div>
-</div>
-</div>
-<div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
-<div class="flex items-start">
-<svg class="h-6 w-6 text-red-600 mr-2 mt-1" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<div>
-<h3 class="font-semibold">Desarrollo de proyectos innovadores</h3>
-<p class="text-sm text-gray-600">Creación de proyectos con impacto social y tecnológico.</p>
-</div>
-</div>
-</div>
-<div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
-<div class="flex items-start">
-<svg class="h-6 w-6 text-green-600 mr-2 mt-1" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<div>
-<h3 class="font-semibold">Mayor participación</h3>
-<p class="text-sm text-gray-600">Incremento en la participación en eventos de programación e innovación.</p>
-</div>
-</div>
-</div>
-<div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
-<div class="flex items-start">
-<svg class="h-6 w-6 text-red-600 mr-2 mt-1" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<div>
-<h3 class="font-semibold">Formación integral</h3>
-<p class="text-sm text-gray-600">Estudiantes con competencias sólidas en desarrollo de software y metodologías de investigación.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="card mt-6">
-<h2 class="card-title text-xl font-bold">Duración</h2>
-<div class="bg-white p-5 rounded-lg shadow-md border-l-4 border-green-600 flex items-center">
-<svg class="h-12 w-12 text-green-600 mr-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<p class="text-lg">El semillero se desarrollará a lo largo del año académico con sesiones semanales.</p>
-</div>
-</div>
-</div>
-<div class="slide-footer">
-<span class="text-sm">6/8</span>
-<div>
-<button class="btn" onclick="prevSlide()">Anterior</button>
-<button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
-</div>
-</div>
-</div>
-<!-- Slide 7: Horarios y Estudiantes -->
-<div class="slide" id="slide7">
-<div class="slide-header">
-<h1 class="text-2xl font-bold">Horarios y Estudiantes</h1>
-</div>
-<div class="slide-content">
-<div class="card mb-6">
-<h2 class="card-title text-xl font-bold">Horario de Sesiones</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div class="bg-white p-5 rounded-lg shadow-md border-l-4 border-green-600 flex items-center">
-<svg class="h-10 w-10 text-green-600 mr-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<div>
-<h3 class="font-semibold">Día y Hora:</h3>
-<p class="text-lg">Lunes de 4:30 a 5:30</p>
-</div>
-</div>
-<div class="bg-white p-5 rounded-lg shadow-md border-l-4 border-red-600 flex items-center">
-<svg class="h-10 w-10 text-red-600 mr-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<div>
-<h3 class="font-semibold">Lugar:</h3>
-<p class="text-lg">Sala de media técnica</p>
-</div>
-</div>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<div class="card">
-<h2 class="card-title text-xl font-bold">Estudiantes de Décimo</h2>
-<div class="student-list">
-<div class="student-card">
-<div class="flex items-center">
-<div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<p>Juan Felipe González Otálvaro</p>
-</div>
-</div>
-<div class="student-card">
-<div class="flex items-center">
-<div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<p>Alejandro Vargas Ramírez</p>
-</div>
-</div>
-<div class="student-card">
-<div class="flex items-center">
-<div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<p>Santiago Echeverri Vanegas</p>
-</div>
-</div>
-<div class="student-card">
-<div class="flex items-center">
-<div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<p>Melany David Salgado</p>
-</div>
-</div>
-<div class="student-card">
-<div class="flex items-center">
-<div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<p>Ronallys Vargas Angarita</p>
-</div>
-</div>
-<div class="student-card">
-<div class="flex items-center">
-<div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<p>Yanienderlin González Arroyo</p>
-</div>
-</div>
-</div>
-</div>
-<div class="card">
-<h2 class="card-title text-xl font-bold">Estudiantes de Once</h2>
-<div class="student-list">
-<div class="student-card">
-<div class="flex items-center">
-<div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<p>Samuel Santiago García</p>
-</div>
-</div>
-<div class="student-card">
-<div class="flex items-center">
-<div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<p>Yeiner Jiménez</p>
-</div>
-</div>
-<div class="student-card">
-<div class="flex items-center">
-<div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<p>Andrés Sepúlveda</p>
-</div>
-</div>
-<div class="student-card">
-<div class="flex items-center">
-<div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<p>Mauricio Orrego</p>
-</div>
-</div>
-<div class="student-card">
-<div class="flex items-center">
-<div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<p>Jhonathan Oscar</p>
-</div>
-</div>
-<div class="student-card">
-<div class="flex items-center">
-<div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<p>Juan Diego Vallejo</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="slide-footer">
-<span class="text-sm">7/8</span>
-<div>
-<button class="btn" onclick="prevSlide()">Anterior</button>
-<button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
-</div>
-</div>
-</div>
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 10;
 
+        function showSlide(slideNumber) {
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            document.getElementById('slide' + slideNumber).classList.add('active');
+            currentSlide = slideNumber;
+        }
 
-    <!-- Slide 8: Proyectos Actuales -->
-    <div class="slide" id="slide8">
-      <div class="slide-header">
-        <h1 class="text-2xl font-bold">Proyectos Actuales</h1>
-      </div>
-      <div class="slide-content">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="card">
-            <h2 class="text-xl font-semibold text-green-700 mb-2">App Huella de Carbono</h2>
-            <p>Aplicación web para calcular y concienciar sobre el impacto ambiental individual mediante el cálculo de la huella de carbono.</p>
-          </div>
-          <div class="card">
-            <h2 class="text-xl font-semibold text-green-700 mb-2">App Consumo de Agua</h2>
-            <p>Herramienta para registrar y analizar el consumo de agua con el fin de promover hábitos sostenibles en el hogar o institución.</p>
-          </div>
-          <div class="card">
-            <h2 class="text-xl font-semibold text-green-700 mb-2">App Registro Abejas y Flores de Oriente</h2>
-            <p>Aplicación colaborativa para registrar especies de abejas y flores en la región, fomentando la protección de la biodiversidad local.</p>
-          </div>
-        </div>
-      </div>
-      <div class="slide-footer">
-        <span class="text-sm">8/10</span>
-        <div>
-          <button class="btn" onclick="prevSlide()">Anterior</button>
-          <button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
-        </div>
-      </div>
-    </div>
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            }
+        }
 
-    <!-- Slide 9: Conocimientos -->
-    <div class="slide" id="slide9">
-      <div class="slide-header">
-        <h1 class="text-2xl font-bold">Conocimientos</h1>
-      </div>
-      <div class="slide-content">
-        <div class="card">
-          <h2 class="text-xl font-semibold text-green-700 mb-4">Temas en desarrollo</h2>
-          <p class="mb-4">En esta sección se presentarán los principales conceptos, habilidades y aprendizajes adquiridos por los estudiantes a lo largo del proceso de investigación y desarrollo.</p>
-          <p class="mb-4">Puedes incluir aquí fotos de talleres, pantallazos de proyectos, líneas de código, diagramas u otras evidencias.</p>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <div class="bg-gray-200 h-48 flex items-center justify-center text-gray-600 font-semibold rounded-lg">Foto 1</div>
-            <div class="bg-gray-200 h-48 flex items-center justify-center text-gray-600 font-semibold rounded-lg">Foto 2</div>
-            <div class="bg-gray-200 h-48 flex items-center justify-center text-gray-600 font-semibold rounded-lg">Foto 3</div>
-          </div>
-        </div>
-      </div>
-      <div class="slide-footer">
-        <span class="text-sm">9/10</span>
-        <div>
-          <button class="btn" onclick="prevSlide()">Anterior</button>
-          <button class="btn ml-2" onclick="nextSlide()">Siguiente</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Slide 10: Final -->
-    <div class="slide" id="slide10">
-      <div class="slide-header">
-        <h1 class="text-2xl font-bold">Nuestra institución y nuestro proyecto PRAE</h1>
-      </div>
-      <div class="slide-content flex items-center justify-center">
-        <div class="max-w-5xl text-center">
-          <p class="text-lg">Contenido final del semillero. Aquí puedes incluir información sobre el PRAE y la institución educativa.</p>
-        </div>
-      </div>
-      <div class="slide-footer">
-        <span class="text-sm">10/10</span>
-        <div>
-          <button class="btn" onclick="prevSlide()">Anterior</button>
-          <button class="btn ml-2" disabled>Siguiente</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    let currentSlide = 1;
-    const totalSlides = 10;
-
-    function showSlide(slideNumber) {
-      document.querySelectorAll('.slide').forEach(slide => {
-        slide.classList.remove('active');
-      });
-      document.getElementById('slide' + slideNumber).classList.add('active');
-      currentSlide = slideNumber;
-    }
-
-    function nextSlide() {
-      if (currentSlide < totalSlides) {
-        showSlide(currentSlide + 1);
-      }
-    }
-
-    function prevSlide() {
-      if (currentSlide > 1) {
-        showSlide(currentSlide - 1);
-      }
-    }
-  </script>
+        function prevSlide() {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+            }
+        }
+    </script>
 </body>
 
 </html>
